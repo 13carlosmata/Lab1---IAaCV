@@ -23,8 +23,8 @@ else
     qc = q - 1 - sz;
 end
 
-wavelength = 0.0; % Replace by correct expression
-amplitude = 0.0; % Replace by correct expression
+wavelength = (2*pi)/(sqrt(p^2+q^2)); % Replace by correct expression
+amplitude = 1/sz; % Replace by correct expression
 %% Plotting
 
 figure
@@ -57,5 +57,12 @@ elseif question == 2
     subplot(1, 3, 3);
     showgrey(imag(F), 64, -Fabsmax, Fabsmax);
     title('imag(F)')
+elseif question == 3
+    subplot(2,1,1)
+    showgrey(Fhat);
+    title(sprintf('Fhat: (p, q) = (%d, %d)', p, q))
+    subplot(2,1,2);
+    showgrey(fftshift(Fhat));
+    title(sprintf('centered Fhat: (pc, qc) = (%d, %d)', pc, qc))
 end
 

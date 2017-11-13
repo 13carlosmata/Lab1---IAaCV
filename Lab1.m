@@ -15,11 +15,48 @@ for i=1:1:size(p,2)
 end
 
 %% Question 2
-F = fftwave(10,10,128,2);
+Q_2 = fftwave(10,10,128,2);
 
+%% Question 5
+Q_3 = fftwave(127,125,128,3);
 
+%% Question 7
 
+F = [zeros(56,128); ones(16,128); zeros(56,128)];
+imshow(F)
+G = F';
+H = F+2*G;
 
+Fhat = fft2(F);
+Ghat = fft2(G);
+Hhat = fft2(H);
+
+figure
+%subplot(3,2,1);
+%showgrey(F);
+%title('F')
+%subplot(3,2,2);
+showgrey((1+abs(Fhat)));
+title("FFT(F)");
+
+figure
+%subplot(3,2,3);
+%showgrey(G);
+%title('G')
+%subplot(3,2,4);
+showgrey(abs(Ghat));
+title("FFT(G)");
+
+figure
+%subplot(3,2,5);
+%showgrey(H);
+%title('H')
+%subplot(3,2,6);
+showgrey(log(1+abs(Hhat)));
+title("FFT(H)");
+
+figure
+showgrey(log(1+abs(fftshift(Hhat))));
 %%
 %{
 close all
