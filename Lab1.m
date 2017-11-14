@@ -167,3 +167,23 @@ subplot(3,3,6); showgrey(img_2_rs); title ('few128 + Phase modification');
 subplot(3,3,7); showgrey(img_3); title ('nallo128');
 subplot(3,3,8); showgrey(img_3_power); title ('nallo128 + Mag. modification');
 subplot(3,3,9); showgrey(img_3_rs); title ('nallo128 + Phase modification');
+
+
+%%  Gaussian Convolution implemented via FFT
+clear all 
+close all
+clc
+
+t = [0.1,0.3,1.0,10.0,100.0];
+figure;
+showgrey((deltafcn(128,128)));
+
+figure;
+for i=1:1:size(t,2)
+    i
+    psf = gaussfft(deltafcn(128,128),t(i));
+    varPSF = variance(psf);
+    subplot(1,5,i);
+    showfs(psf);
+    title(sprintf('T = %.2f',t(i)));
+end
