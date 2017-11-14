@@ -3,8 +3,10 @@ Carlos Mata - Lab1
 Image Analysis and Computer Vision - DD2423
 %}
 addpath('DD2423_Lab_Files/Functions');
+
 close all
 clear all
+clc
 
 %% Question 1
 p = [5,9,17,17,5,125];
@@ -61,7 +63,6 @@ showgrey(log(1+abs(fftshift(Hhat))));
 %% Multiplication
 
 % Question 10
-close all
 F = [zeros(56,128); ones(16,128); zeros(56,128)];
 G = F';
 
@@ -82,8 +83,6 @@ title('fft2(F)*fft2(G)')
 %% Scaling
 
 % Question 11
-clc
-close all
 figure
 F = [zeros(60, 128); ones(8, 128); zeros(60, 128)] .* ...
     [zeros(128, 48) ones(128, 32) zeros(128, 48)];
@@ -99,7 +98,6 @@ title('fft2(F)');
 %% Rotation
 
 % Question 12
-clc
 close all
 clear all
 
@@ -111,7 +109,8 @@ F = [zeros(60, 128); ones(8, 128); zeros(60, 128)] .* ...
 angles = [30,45,60,90];
 j = 1;
 jplot = 1;
-figure
+figure;
+
 for i=angles
     G_x = rot(F,angles(j));
     Ghat_x = fft2(G_x);
@@ -130,14 +129,41 @@ for i=angles
     subplot(4,3,jplot+2);
     showgrey(log(1+abs(Hhat_x)));
     axis on;
-    title(sprintf('Rotated by an angle of: %d', angles(j)));
-    
-    
-    
+    title(sprintf('Rotation by an angle of: %d', angles(j)));
+   
     j = j + 1;
     jplot = jplot+3;
 end
 
+%% Phase and Magnitude
+addpath('DD2423_Lab_Files/Images-m');
+clear all
+close all
+clc
+% Question 13
+a = 10^-10;
 
+img_1 = phonecalc128;
+img_2 = few128;
+img_3 = nallo128;
 
+img_1_power = pow2image(img_1,a);
+img_2_power = pow2image(img_2,a);
+img_3_power = pow2image(img_3,a);
 
+img_1_rs = randphaseimage(img_1);
+img_2_rs = randphaseimage(img_2);
+img_3_rs = randphaseimage(img_3);
+
+figure;
+subplot(3,3,1); showgrey(img_1); title ('phonecalc128');
+subplot(3,3,2); showgrey(img_1_power); title ('phonecalc128 + Mag. modification');
+subplot(3,3,3); showgrey(img_1_rs); title ('phonecalc128 + Phase modification');
+
+subplot(3,3,4); showgrey(img_2); title ('few128');
+subplot(3,3,5); showgrey(img_2_power); title ('few128 + Mag. modification');
+subplot(3,3,6); showgrey(img_2_rs); title ('few128 + Phase modification');
+
+subplot(3,3,7); showgrey(img_3); title ('nallo128');
+subplot(3,3,8); showgrey(img_3_power); title ('nallo128 + Mag. modification');
+subplot(3,3,9); showgrey(img_3_rs); title ('nallo128 + Phase modification');
