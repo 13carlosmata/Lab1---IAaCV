@@ -1,14 +1,13 @@
 %{
-Carlos Mata - Lab1 
+Carlos Mata & Kenneth Lau K.W.- Lab1 
 Image Analysis and Computer Vision - DD2423
 %}
-addpath('DD2423_Lab_Files/Functions');
 
-close all
-clear all
-clc
+addpath('../DD2423_Lab_Files/Functions');
 
-%% Question 1
+close all;
+
+%% Qestion 1
 p = [5,9,17,17,5,125];
 q = [9,5,9,121,1,1];
 sz = 128;
@@ -16,13 +15,13 @@ for i=1:1:size(p,2)
     F = fftwave(p(i),q(i),sz, 1);
 end
 
-%% Question 2
+%% Qestion 2
 Q_2 = fftwave(10,10,128,2);
 
-%% Question 5
+%% Qestion 5
 Q_3 = fftwave(127,125,128,3);
 
-%% Question 7
+%% Qestion 7
 
 F = [zeros(56,128); ones(16,128); zeros(56,128)];
 imshow(F)
@@ -39,7 +38,7 @@ figure
 %title('F')
 %subplot(3,2,2);
 showgrey((1+abs(Fhat)));
-title("FFT(F)");
+title('FFT(F)');
 
 figure
 %subplot(3,2,3);
@@ -47,7 +46,7 @@ figure
 %title('G')
 %subplot(3,2,4);
 showgrey(abs(Ghat));
-title("FFT(G)");
+title('FFT(G)');
 
 figure
 %subplot(3,2,5);
@@ -55,14 +54,14 @@ figure
 %title('H')
 %subplot(3,2,6);
 showgrey(log(1+abs(Hhat)));
-title("FFT(H)");
+title('FFT(H)');
 
 figure
 showgrey(log(1+abs(fftshift(Hhat))));
 
 %% Multiplication
 
-% Question 10
+% Qestion 10
 F = [zeros(56,128); ones(16,128); zeros(56,128)];
 G = F';
 
@@ -82,7 +81,7 @@ title('fft2(F)*fft2(G)')
 
 %% Scaling
 
-% Question 11
+% Qestion 11
 figure
 F = [zeros(60, 128); ones(8, 128); zeros(60, 128)] .* ...
     [zeros(128, 48) ones(128, 32) zeros(128, 48)];
@@ -97,9 +96,8 @@ title('fft2(F)');
 
 %% Rotation
 
-% Question 12
+% Qestion 12
 close all
-clear all
 
 alpha = 30;
 figure;
@@ -137,10 +135,9 @@ end
 
 %% Phase and Magnitude
 addpath('DD2423_Lab_Files/Images-m');
-clear all
 close all
 clc
-% Question 13
+% Qestion 13
 a = 10^-10;
 
 img_1 = phonecalc128;
@@ -169,20 +166,132 @@ subplot(3,3,8); showgrey(img_3_power); title ('nallo128 + Mag. modification');
 subplot(3,3,9); showgrey(img_3_rs); title ('nallo128 + Phase modification');
 
 
-%%  Gaussian Convolution implemented via FFT
-clear all 
+%% Qestion 15 & Qestion 16 Gaussian Convolution implemented via FFT
 close all
 clc
 
-t = [0.1,0.3,1.0,10.0,100.0];
-figure;
-showgrey((deltafcn(128,128)));
+t = [0.1,0.3,1.0,10.0,100.0,1.0,4.0,16.0,64.0,256.0];
+% figure;
+% showgrey((deltafcn(128,128)));
 
 figure;
 for i=1:1:size(t,2)
     psf = gaussfft(deltafcn(128,128),t(i));
     varPSF = max(max(variance(psf)));
-    subplot(1,5,i);
+    subplot(2,5,i);
     showfs(fftshift(psf));
-    title(['T =',num2str(t(i)),'V = ',num2str(varPSF)]);
+    title(['T =',num2str(t(i)),'; v = ',num2str(varPSF)]);
 end
+
+%% Qestion 17 & Qestion 18 Smoothing 
+addpath('../DD2423_Lab_Files/Images-m');
+close all;
+clc;
+
+% Loading the image
+office = office256;
+% Adding gaussian noise
+add = gaussnoise(office, 16);
+% Adding salt and pepper noise
+sap = sapnoise(office, 0.1, 255);
+
+% figure();
+% showgrey(add);
+% figure()
+% showgrey(sap);
+
+
+% Gaussian Smotthing
+figure;
+t = [0.1,0.3,1.0,10.0,100];
+for i=1:1:size(t,2)
+    psf = gaussfft(add,t(i));
+    subplot(2,5,i);
+    showgrey(psf);
+    title(['sd^2 =',num2str(t(i))]);
+end
+for i=1:1:size(t,2)
+    psf = gaussfft(sap,t(i));
+    subplot(2,5,5+i);
+    showgrey(psf);
+    title(['sd^2 =',num2str(t(i))]);
+end
+%}
+
+%{
+% Median filtering
+figure;
+t = [1,3,9,15,27];
+for i=1:1:size(t,2)
+    psf = medfilt(add,t(i));
+    subplot(2,5,i);
+    showgrey(psf);
+    title(['window size =',num2str(t(i))]);
+end
+for i=1:1:size(t,2)
+    psf = medfilt(sap,t(i));
+    subplot(2,5,5+i);
+    showgrey(psf);
+    title(['window size =',num2str(t(i))]);
+end
+%}
+
+%{
+% Ideal low-pas filtering
+figure;
+t = [0.01,0.1,1,10,100];
+for i=1:1:size(t,2)
+    psf = ideal(add,t(i));
+    subplot(2,5,i);
+    showgrey(psf);
+    title(['cut-off freq =',num2str(t(i))]);
+end
+for i=1:1:size(t,2)
+    psf = ideal(sap,t(i));
+    subplot(2,5,5+i);
+    showgrey(psf);
+    title(['cut-off freq =',num2str(t(i))]);
+end
+%}
+
+%% Qestion 19 & Qestion 20 Smoothing and subsampling
+
+addpath('../DD2423_Lab_Files/Images-m');
+close all
+figure
+img = phonecalc256;
+smoothimg = img;
+N=5;
+
+% for gaussian; t = 0.2 is better
+t = 0.2;
+suptitle(['Gaussian filter, sd^2 = ',num2str(t)])
+for i=1:N
+    if i>1    % generate subsampled versions
+        img = rawsubsample(img);
+        smoothimg = gaussfft(smoothimg,t);
+        smoothimg = rawsubsample(smoothimg);
+    end
+    subplot(2, N, i)
+    showgrey(img)
+    subplot(2, N, i+N)
+    showgrey(smoothimg)
+end
+%}
+%{
+% for low pass filter; t=1 is better
+t = 1;
+suptitle(['Low pass filter, cut-off freq = ',num2str(t)])
+for i=1:N
+    if i>1    % generate subsampled versions
+        img = rawsubsample(img);
+        smoothimg = ideal(smoothimg,t);
+        smoothimg = rawsubsample(smoothimg);
+    end
+    subplot(2, N, i)
+    showgrey(img)
+    subplot(2, N, i+N)
+    showgrey(smoothimg)
+end
+%}
+
