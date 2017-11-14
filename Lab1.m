@@ -57,6 +57,57 @@ title("FFT(H)");
 
 figure
 showgrey(log(1+abs(fftshift(Hhat))));
+
+%% Multiplication
+
+% Question 10
+close all
+F = [zeros(56,128); ones(16,128); zeros(56,128)];
+G = F';
+
+figure
+subplot(1,4,1);
+showgrey(F.*G);
+title('F.*G')
+subplot(1,4,2);
+showfs(fft2(F.*G));
+title('fft2(F.*G)')
+subplot(1,4,3);
+showfs(fft2(F)*fft2(G));
+title('fft2(F)*fft2(G)')
+subplot(1,4,4);
+showfs(fft2(F)*fft2(G)/(128^2));
+title('fft2(F)*fft2(G)')
+
+%% Scaling
+
+% Question 11
+close all
+figure
+F = [zeros(60, 128); ones(8, 128); zeros(60, 128)] .* ...
+    [zeros(128, 48) ones(128, 32) zeros(128, 48)];
+FF = fft2(F);
+
+subplot(1,2,1);
+showgrey(F);
+title('F.*G');
+subplot(1,2,2);
+showfs(FF);
+title('fft2(F)');
+
+%% Rotation
+
+% Question 12
+figure
+
+
+
+
+
+
+
+
+
 %%
 %{
 close all
