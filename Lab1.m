@@ -7,7 +7,7 @@ addpath('../DD2423_Lab_Files/Functions');
 
 close all;
 
-%% Qestion 1
+%% Question 1
 p = [5,9,17,17,5,125];
 q = [9,5,9,121,1,1];
 sz = 128;
@@ -15,13 +15,13 @@ for i=1:1:size(p,2)
     F = fftwave(p(i),q(i),sz, 1);
 end
 
-%% Qestion 2
+%% Question 2
 Q_2 = fftwave(10,10,128,2);
 
-%% Qestion 5
+%% Question 5
 Q_3 = fftwave(127,125,128,3);
 
-%% Qestion 7
+%% Question 7
 
 F = [zeros(56,128); ones(16,128); zeros(56,128)];
 imshow(F)
@@ -61,7 +61,7 @@ showgrey(log(1+abs(fftshift(Hhat))));
 
 %% Multiplication
 
-% Qestion 10
+% Question 10
 F = [zeros(56,128); ones(16,128); zeros(56,128)];
 G = F';
 
@@ -81,7 +81,7 @@ title('fft2(F)*fft2(G)')
 
 %% Scaling
 
-% Qestion 11
+% Question 11
 figure
 F = [zeros(60, 128); ones(8, 128); zeros(60, 128)] .* ...
     [zeros(128, 48) ones(128, 32) zeros(128, 48)];
@@ -96,7 +96,7 @@ title('fft2(F)');
 
 %% Rotation
 
-% Qestion 12
+% Question 12
 close all
 
 alpha = 30;
@@ -137,7 +137,7 @@ end
 addpath('DD2423_Lab_Files/Images-m');
 close all
 clc
-% Qestion 13
+% Question 13
 a = 10^-10;
 
 img_1 = phonecalc128;
@@ -166,7 +166,7 @@ subplot(3,3,8); showgrey(img_3_power); title ('nallo128 + Mag. modification');
 subplot(3,3,9); showgrey(img_3_rs); title ('nallo128 + Phase modification');
 
 
-%% Qestion 15 & Qestion 16 Gaussian Convolution implemented via FFT
+%% Question 15 & Question 16 Gaussian Convolution implemented via FFT
 close all
 clc
 
@@ -183,7 +183,7 @@ for i=1:1:size(t,2)
     title(['T =',num2str(t(i)),'; v = ',num2str(varPSF)]);
 end
 
-%% Qestion 17 & Qestion 18 Smoothing 
+%% Question 17 & Question 18 Smoothing 
 addpath('../DD2423_Lab_Files/Images-m');
 close all;
 clc;
@@ -254,7 +254,7 @@ for i=1:1:size(t,2)
 end
 %}
 
-%% Qestion 19 & Qestion 20 Smoothing and subsampling
+%% Question 19 & Question 20 Smoothing and subsampling
 
 addpath('../DD2423_Lab_Files/Images-m');
 close all
